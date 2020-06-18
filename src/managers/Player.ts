@@ -161,9 +161,33 @@ class Player {
     }
     this.node
       .wsSend({
-        op: "equalizer",
+        op: "filters",
         guildId: this.options.guild.id,
-        bands: [...this.bands.values()],
+        equalizer: [...this.bands.values()],
+      })
+      .catch((err) => {
+        if (err) throw new Error(err);
+      });
+  }
+
+  /**
+   * Uses equalization to eliminate part of a band, usually targeting vocals.
+   * @param {Number} [level]
+   * @param {Number} [monoLevel]
+   * @param {Number} [filterBand]
+   * @param {Number} [filterWidth]
+   */
+  public setKaraoke(level?: number, monoLevel?: number, filterBand?: number, filterWidth?: number): void {
+    this.node
+      .wsSend({
+        op: "filters",
+        guildId: this.options.guild.id,
+        karaoke: {
+          level: level ? level : 1.0,
+          monoLevel: monoLevel ? monoLevel : 1.0,
+          filterBand: filterBand ? filterBand : 220.0,
+          filterWidth: filterWidth ? filterWidth : 100.0
+        },
       })
       .catch((err) => {
         if (err) throw new Error(err);
