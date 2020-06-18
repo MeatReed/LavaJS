@@ -76,6 +76,7 @@ declare module "@anonymousg/lavajs" {
 
     public toggleRepeat(type?: "track" | "queue"): boolean;
     public EQBands(band?: number, gain?: number): void;
+    public setKaraoke(level?: number, monoLevel?: number, filterBand?: number, filterWidth?: number): void;
     public movePlayer(channel: VoiceChannel): void;
     public play(): void;
     public lavaSearch(
